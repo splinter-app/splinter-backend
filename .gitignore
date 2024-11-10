@@ -1,0 +1,8 @@
+# Ignore .env file and virtual environment directory
+.env
+venv/
+venv-fastapi/
+myenv/
+
+# Ignore Python bytecode files
+__pycache__/
