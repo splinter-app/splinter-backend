@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from config import settings
-from embedding_models import hugging_face_embed
+from embedding_models import openai_embed
 from db import pinecone_similarity_search
 from services import openai_query
 from utils import generate_prompt
@@ -29,7 +29,7 @@ async def prompt(request: PromptRequest):
   question = request.question
 
   # Step 1: Convert question into vector using the same embedding model as used by the vector DB
-  embedding = hugging_face_embed(question)
+  embedding = openai_embed(question)
 
   # Step 2: Perform similarity search using vectorized question to retrieve relevants chunks of data
   context = pinecone_similarity_search(embedding)
@@ -37,7 +37,6 @@ async def prompt(request: PromptRequest):
   # Step 3: Make OpenAI API call with user question and with retrieved data as context
   prompt = generate_prompt(question, context)
   response = openai_query(prompt)
-  print(prompt)
 
   # Step 4: Return answer and relevant chunks of data to frontend
   return {"question": question, "response": response , "prompt": prompt, "context": context}
