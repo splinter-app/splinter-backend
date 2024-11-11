@@ -12,19 +12,22 @@ def generate_prompt(question: str, contexts: list):
       f"\n\nQuestion: {question}\nAnswer:"
   )
 
+  # Extract only the text from each context object
+  context_texts = [context["text"] for context in contexts]
+
   # append contexts until hitting limit
-  for i in range(1, len(contexts)):
-      if len("\n\n---\n\n".join(contexts[:i])) >= limit:
+  for i in range(1, len(context_texts)):
+      if len("\n\n---\n\n".join(context_texts[:i])) >= limit:
           prompt = (
               prompt_start +
-              "\n\n---\n\n".join(contexts[:i-1]) +
+              "\n\n---\n\n".join(context_texts[:i-1]) +
               prompt_end
           )
           break
-      elif i == len(contexts)-1:
+      elif i == len(context_texts)-1:
           prompt = (
               prompt_start +
-              "\n\n---\n\n".join(contexts) +
+              "\n\n---\n\n".join(context_texts) +
               prompt_end
           )
   return prompt

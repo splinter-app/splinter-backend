@@ -27,5 +27,6 @@ def pinecone_similarity_search(embedding: list) -> list:
     # Sort results across all namespaces by score and return only top_k results
     all_results = sorted(all_results, key=lambda x: x["score"], reverse=True)[:top_k]
 
-    return [result['metadata']['text'] for result in all_results]
+    # Return a list of objects with "text" and "score"
+    return [{'text': result['metadata']['text'], 'score': result['score']} for result in all_results]
 
