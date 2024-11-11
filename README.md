@@ -2,8 +2,8 @@
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/username/project-name.git
-    cd splinter-backend
+    git clone https://github.com/splinter-app/splinter_backend.git
+    cd splinter_backend
     ```
 
 2. Create a virtual environment:
@@ -18,7 +18,7 @@
 
 4. Run the app:
     ```bash
-    python main.py
+    uvicorn main:app --reload
     ```
 
 ---
